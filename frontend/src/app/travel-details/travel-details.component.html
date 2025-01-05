@@ -1,0 +1,137 @@
+<div class="travel-container">
+  <form class="travel-form" #travelForm="ngForm" (ngSubmit)="submitTravelForm(travelForm)">
+    <div class="form-fields-row">
+      <!-- Date of Travel -->
+      <div class="form-group">
+        <label for="travel-date">Date of Travel</label>
+        <input type="date" id="travel-date" name="travelDate" ngModel required />
+        <div class="error-message" *ngIf="travelForm.submitted && travelForm.controls['travelDate']?.invalid">
+          Date of Travel is required.
+        </div>
+      </div>
+
+      <!-- Purpose of Travel -->
+      <div class="form-group">
+        <label for="purpose">Purpose of Travel</label>
+        <select id="purpose" name="purpose" ngModel required>
+          <option value="" disabled selected>Select Purpose</option>
+          <option value="education">Education</option>
+          <option value="medical">Medical</option>
+          <option value="holiday">Holiday</option>
+          <option value="business">Business</option>
+          <option value="immigration">Immigration</option>
+          <option value="employment">Employment</option>
+        </select>
+        <div class="error-message" *ngIf="travelForm.submitted && travelForm.controls['purpose']?.invalid">
+          Purpose of Travel is required.
+        </div>
+      </div>
+
+      <!-- Delivery Mode -->
+      <div class="form-group">
+        <label for="deliveryMode">
+          Delivery Mode
+        </label>
+        <select id="deliveryMode" name="deliveryMode" ngModel required (change)="onDeliveryModeChange($event)">
+          <option value="" disabled selected>Select Delivery Mode</option>
+          <option value="doorDelivery">Door Delivery</option>
+          <option value="pickup">Pickup from Branch</option>
+        </select>
+        <div class="error-message" *ngIf="travelForm.submitted && travelForm.controls['deliveryMode']?.invalid">
+          Delivery Mode is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Fields Container (Visible only when a delivery mode is selected) -->
+    <div class="address-fields-container" *ngIf="isFieldsVisible">
+      
+      <!-- Pickup from Branch -->
+      <div class="pickup-address" *ngIf="!isDoorDelivery">
+        <h3>Pickup Address</h3>
+        <div class="form-group">
+          <label for="pincode">Pincode</label>
+          <input 
+            type="text" 
+            id="pincode" 
+            name="pincode" 
+            ngModel 
+            [(ngModel)]="pincode" 
+            [disabled]="isDoorDelivery || isAddressPrefilled"
+            class="wide-input"
+            required 
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="address">Address</label>
+          <textarea 
+            id="address" 
+            name="address" 
+            ngModel 
+            [(ngModel)]="address" 
+            [disabled]="isDoorDelivery || isAddressPrefilled"
+            class="wide-textarea"
+            required 
+          ></textarea>
+        </div>
+      
+
+      <!-- Date of Pickup (Visible only when Pickup from Branch is selected) -->
+      <div class="form-group" *ngIf="!isDoorDelivery">
+        <label for="pickup-date">Date of Pickup</label>
+        <input 
+          type="date" 
+          id="pickup-date" 
+          name="pickupDate" 
+          ngModel 
+          [min]="currentDate"
+          class="wide-input"
+          required
+        />
+        <div class="error-message" *ngIf="travelForm.submitted && travelForm.controls['pickupDate']?.invalid">
+          Date of Pickup is required and must not be in the past.
+        </div>
+      </div>
+    </div>
+
+      <!-- Door Delivery -->
+      <div class="door-delivery-address" *ngIf="isDoorDelivery">
+        <h3>Delivery Address</h3>
+        <div class="form-group">
+          <label for="pincode">Pincode</label>
+          <input 
+            type="text" 
+            id="pincode" 
+            name="pincode" 
+            ngModel 
+            [(ngModel)]="pincode"
+            class="wide-input"
+            required 
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="address">Address</label>
+          <textarea 
+            id="address" 
+            name="address" 
+            ngModel 
+            [(ngModel)]="address"
+            class="wide-textarea"
+            required 
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submission Button -->
+    <button
+      type="submit"
+      class="submit-button"
+      [disabled]="!travelForm.valid || travelForm.pristine"
+    >
+      Next
+    </button>
+  </form>
+</div>

@@ -1,0 +1,157 @@
+.forex-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  margin: 0 20px;
+  box-sizing: border-box;
+
+  .forex-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+
+    .form-fields-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+      align-items: center;
+    }
+
+    
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 18%;
+      max-width: 18%;
+      align-items: center;
+      height: 6rem;
+
+      .conversion-rate-text {
+        color: red;
+        font-size: 0.8rem;
+        margin-top: 5px;
+        display: block;
+        width: 8rem
+      }
+
+      label {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 5px;
+
+        .required {
+          color: red;
+        }
+      }
+
+      select,
+      input {
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      input[disabled] {
+        background-color: #e9ecef;
+        cursor: not-allowed;
+      }
+
+      .error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+      }
+    }
+
+    .book-now-button {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      align-self: center;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+      &:disabled {
+        background-color: #d3d3d3; /* Light gray background */
+        color: #808080; /* Gray text */
+        cursor: not-allowed; /* Change cursor to indicate that the button is not clickable */
+        border: 1px solid #cccccc; /* Gray border to match disabled state */
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .forex-container .form-fields-row {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .forex-container .form-fields-row .form-group {
+    width: 100%;
+  }
+
+  .forex-container .form-fields-row .form-group select,
+  .forex-container .form-fields-row .form-group input {
+    width: 400%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.5rem;
+  }
+
+  .forex-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: left; /* Align to the left to match input alignment */
+}
+
+
+@media (max-width: 426px) {
+  .forex-container .form-fields-row .form-group select,
+  .forex-container .form-fields-row .form-group input,
+  .forex-container .form-fields-row .form-group label {
+    width: 400%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .forex-container .form-fields-row .form-group select,
+  .forex-container .form-fields-row .form-group input,
+  .forex-container .form-fields-row .form-group label {
+    width: 400%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.5rem;
+  }
+}

@@ -1,0 +1,67 @@
+<div class="traveller-container">
+  <form class="traveller-form" #travellerForm="ngForm" (ngSubmit)="submitTravellerForm(travellerForm)">
+    <div class="form-fields-row">
+      <div class="form-group">
+        <label for="country">Travelling to Country</label>
+        <select id="country" name="country" ngModel required>
+          <option value="" disabled selected>Select Country</option>
+          <option value="India">India</option>
+          <option value="USA">USA</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+        </select>
+        <div class="error-message" *ngIf="travellerForm.submitted && travellerForm.controls['country']?.invalid">
+          Country is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name">Traveller's Name (as per PAN card)</label>
+        <input type="text" id="name" name="name" ngModel required placeholder="Enter Full Name" />
+        <div class="error-message" *ngIf="travellerForm.submitted && travellerForm.controls['name']?.invalid">
+          Traveller's Name is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="pan">Traveller PAN Number</label>
+        <input type="text" id="pan" name="pan" ngModel required placeholder="Enter PAN Number" />
+        <div class="error-message" *ngIf="travellerForm.submitted && travellerForm.controls['pan']?.invalid">
+          PAN Number is required.
+        </div>
+      </div>
+    </div>
+      <div class="travellerdetails-declaration-container">
+      <div class="checkboxes">
+        <div class="checkbox-group">
+          <input 
+            type="checkbox" 
+            id="resident-declaration" 
+            name="resident-declaration" 
+            ngModel 
+            required 
+          />
+          <label for="resident-declaration">
+            I confirm that traveller is an Indian Resident
+            <span class="tooltip" data-tooltip="As per RBI regulations, GGS Forex is authorized to sell currency to Indian resident only.">?</span>
+          </label>
+        </div>        
+        <div class="checkbox-group">
+          <input type="checkbox" id="forex-declaration" name="forex-declaration" ngModel required />
+          <label for="forex-declaration">Declare that traveller has not purchased any forex by paying in cash for the same trip earlier from GGS Forex</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="pancard-declaration" name="pancard-declaration" ngModel required />
+          <label for="pancard-declaration">I confirm that traveller name mentioned is same as on Pancard</label>
+        </div>
+      </div>
+      </div>
+    
+    <div class="buttons">
+      <button type="button" class="travellerdetails-back-button" (click)="goBack()">Back</button>
+      <button type="submit" class="travellerdetails-next-button" [disabled]="!travellerForm.valid || travellerForm.pristine">
+        Next
+      </button>
+    </div>
+  </form>
+</div>

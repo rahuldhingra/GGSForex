@@ -1,0 +1,189 @@
+.travel-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  margin: 0 20px;
+  box-sizing: border-box;
+
+  .travel-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+
+    .form-fields-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+      align-items: center;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 18%;
+      max-width: 18%;
+      align-items: center;
+
+      label {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 5px;
+
+        .required {
+          color: red;
+        }
+      }
+
+      select,
+      input {
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      input[disabled],
+      textarea[disabled] {
+        background-color: #e9ecef;
+        cursor: not-allowed;
+      }
+
+      .error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+      }
+    }
+
+    .address-fields-container {
+      width: 100%;
+      margin-top: 20px;
+
+      .pickup-address,
+      .door-delivery-address {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        h3 {
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+
+        .form-group {
+          width: 100%;
+          margin-bottom: 20px;
+
+          input.wide-input,
+          textarea.wide-textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+          }
+        }
+      }
+    }
+
+    .submit-button {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      align-self: center;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+      &:disabled {
+        background-color: #d3d3d3;
+        color: #808080;
+        cursor: not-allowed;
+        border: 1px solid #cccccc;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .travel-container .form-fields-row {
+    display: flex;
+    flex-direction: column;
+    width: 400%;
+  }
+
+  .travel-container .form-fields-row .form-group {
+    width: 100%;
+  }
+
+  .travel-container .form-fields-row .form-group select,
+  .travel-container .form-fields-row .form-group input,
+  .travel-container .form-fields-row .form-group textarea {
+    width: 400%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.5rem;
+  }
+
+  .travel-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .travel-container .travel-form .address-fields-container {
+    width: 400%;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 426px) {
+  .travel-container .form-fields-row .form-group select,
+  .travel-container .form-fields-row .form-group input,
+  .travel-container .form-fields-row .form-group label,
+  .travel-container .form-fields-row .form-group textarea {
+    width: 400%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.5rem;
+  }
+
+  .travel-container .travel-form .address-fields-container {
+    width: 400%;
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 320px) {
+  .travel-container .form-fields-row .form-group select,
+  .travel-container .form-fields-row .form-group input,
+  .travel-container .form-fields-row .form-group label,
+  .travel-container .form-fields-row .form-group textarea {
+    width: 400%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.5rem;
+  }
+
+  .travel-container .travel-form .address-fields-container {
+    width: 400%;
+    margin-top: 20px;
+  }
+}

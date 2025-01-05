@@ -1,0 +1,93 @@
+<div class="forex-container">
+  <form class="forex-form" #forexForm="ngForm" (ngSubmit)="bookNow(forexForm)">
+    <div class="form-fields-row">
+      <div class="form-group">
+        <label for="location">Location</label>
+        <select
+          id="location"
+          name="location"
+          [(ngModel)]="selectedLocation"
+          (change)="onLocationChange()"
+          required
+        >
+          <option value="" disabled selected>Select Location</option>
+          <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+        </select>
+        <div class="error-message" *ngIf="forexForm.submitted && forexForm.controls['location']?.invalid">
+          Location is required.
+        </div>
+      </div>
+
+      <!-- Currency Dropdown -->
+      <div class="form-group">
+        <label for="currency">Currency</label>
+        <select
+          id="currency"
+          name="currency"
+          [(ngModel)]="selectedCurrency"
+          (ngModelChange)="updateAmount($event)" 
+          required
+        >
+          <option value="" disabled selected>Select Currency</option>
+          <option *ngFor="let currency of currencies" [value]="currency.code">
+            {{ currency.currencyName }}
+          </option>
+        </select>
+        <div class="error-message" *ngIf="forexForm.submitted && forexForm.controls['currency']?.invalid">
+          Currency is required.
+        </div>
+      </div>
+
+      <!-- Product Dropdown -->
+      <div class="form-group">
+        <label for="product">Product</label>
+        <select
+          id="product"
+          name="product"
+          [(ngModel)]="selectedProducts"
+          required
+        >
+          <option value="" disabled selected>Select Product</option>
+          <option *ngFor="let product of products" [value]="product">{{ product }}</option>
+        </select>
+        <div class="error-message" *ngIf="forexForm.submitted && forexForm.controls['product']?.invalid">
+          Product is required.
+        </div>
+      </div>
+
+      <!-- Quantity Input -->
+      <div class="form-group">
+        <label for="quantity">Forex Quantity</label>
+        <input
+          type="number"
+          id="quantity"
+          name="quantity"
+          [(ngModel)]="forexQuantity"
+          required
+          (input)="updateAmount($event)"
+        />
+        <div class="error-message" *ngIf="forexForm.submitted && forexForm.controls['quantity']?.invalid">
+          Forex Quantity is required.
+        </div>
+      </div>
+
+      <!-- Amount Display -->
+      <div class="form-group">
+        <label for="amount">Amount in INR</label>
+        <input type="text" id="amount" [value]="amountInINR || 0" disabled />
+        <span *ngIf="conversionRateText" class="conversion-rate-text">
+          {{ conversionRateText }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="book-now-button"
+      [disabled]="!forexForm.valid || forexForm.pristine"
+    >
+      Book Now
+    </button>
+  </form>
+</div>

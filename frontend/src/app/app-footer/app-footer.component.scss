@@ -1,0 +1,85 @@
+/* Footer Styling */
+.app-footer {
+  background-color: #f8f9fa; /* Match the light background of the header */
+  color: #333; /* Match the text color of the header */
+  padding: 20px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-column {
+  flex: 1 1 calc(25% - 20px); /* Four columns with equal width */
+  min-width: 200px;
+}
+
+.footer-column h4 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #007bff; /* Accent color for headings */
+  margin-bottom: 10px;
+}
+
+.footer-link {
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #007bff; /* Match hover color from the header */
+}
+
+.footer-contact {
+  font-size: 14px;
+  color: #333;
+}
+
+.footer-social-icons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.footer-social-icon img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Responsive Design for Footer */
+@media (max-width: 1024px) {
+  .footer-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns for footer */
+    gap: 20px;
+    text-align: center;
+  }
+
+  .footer-column {
+    flex: 1 1 100%;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 426px) {
+  .footer-container {
+    display: flex;
+    flex-direction: column; /* Switch to one column */
+    align-items: center; /* Center-align the column */
+  }
+
+  .footer-column {
+    flex: 1 1 100%; /* Full width for the column */
+    text-align: center; /* Center-align column content */
+    margin-bottom: 20px;
+  }
+}

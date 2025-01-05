@@ -1,0 +1,82 @@
+<div class="document-container">
+  <form class="document-form" #documentForm="ngForm" (ngSubmit)="submitDocumentForm(documentForm)">
+    <h2>List of Documents to Process the Transaction:</h2>
+    <ul class="document-list">
+      <li>Passport (First Page)</li>
+      <li>Passport (Last Page)</li>
+      <li>PAN Card</li>
+      <li>Ticket Copy</li>
+      <li>Visa (Not required if visa on arrival at destination)</li>
+    </ul>
+    <p>All documents should be in PDF, JPG, JPEG, PNG format and size should be less than 2MB.</p>
+
+    <div class="form-fields-row">
+      <div class="form-group">
+        <h2 for="upload-option">Upload Option</h2>
+        <div class="radio-group">
+          <input type="radio" id="upload-now" name="upload-option" ngModel value="upload-now" required />
+          <label for="upload-now">Upload Now</label>
+
+          <input type="radio" id="upload-later" name="upload-option" ngModel value="upload-later" required />
+          <label for="upload-later">Upload Later</label>
+        </div>
+        <div class="error-message" *ngIf="documentForm.submitted && !documentForm.controls['upload-option']?.valid">
+          Please select an upload option.
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="documentForm.controls['upload-option']?.value === 'upload-now'" class="upload-documents">
+      <div class="form-group">
+        <label for="passport-first-page">Passport (First Page)</label>
+        <input type="file" id="passport-first-page" name="passport-first-page" accept="application/pdf, image/jpeg, image/jpg, image/png" ngModel required />
+        <div class="error-message" *ngIf="documentForm.submitted && !documentForm.controls['passport-first-page']?.valid">
+          Passport (First Page) is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="passport-last-page">Passport (Last Page)</label>
+        <input type="file" id="passport-last-page" name="passport-last-page" accept="application/pdf, image/jpeg, image/jpg, image/png" ngModel required />
+        <div class="error-message" *ngIf="documentForm.submitted && !documentForm.controls['passport-last-page']?.valid">
+          Passport (Last Page) is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="pan-card">PAN Card</label>
+        <input type="file" id="pan-card" name="pan-card" accept="application/pdf, image/jpeg, image/jpg, image/png" ngModel required />
+        <div class="error-message" *ngIf="documentForm.submitted && !documentForm.controls['pan-card']?.valid">
+          PAN Card is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ticket-copy">Ticket Copy</label>
+        <input type="file" id="ticket-copy" name="ticket-copy" accept="application/pdf, image/jpeg, image/jpg, image/png" ngModel required />
+        <div class="error-message" *ngIf="documentForm.submitted && !documentForm.controls['ticket-copy']?.valid">
+          Ticket Copy is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="visa">Visa (Not Required if Visa on Arrival)</label>
+        <input type="file" id="visa" name="visa" accept="application/pdf, image/jpeg, image/jpg, image/png" ngModel />
+      </div>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="pan-aadhar-link" name="pan-aadhar-link" ngModel required />
+      <label for="pan-aadhar-link">
+        I confirm that traveller's PAN and Aadhar are linked and required details shall be provided.
+      </label>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="document-details-back-button" (click)="goBack()">Back</button>
+      <button type="submit" class="document-details-next-button" [disabled]="!documentForm.valid || documentForm.pristine">
+        Next
+      </button>
+    </div>
+  </form>
+</div>
