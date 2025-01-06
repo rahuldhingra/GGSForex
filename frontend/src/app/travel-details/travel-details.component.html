@@ -4,7 +4,7 @@
       <!-- Date of Travel -->
       <div class="form-group">
         <label for="travel-date">Date of Travel</label>
-        <input type="date" id="travel-date" name="travelDate" ngModel required />
+        <input type="date" id="travel-date" name="travelDate" [min]="currentDate" ngModel required />
         <div class="error-message" *ngIf="travelForm.submitted && travelForm.controls['travelDate']?.invalid">
           Date of Travel is required.
         </div>

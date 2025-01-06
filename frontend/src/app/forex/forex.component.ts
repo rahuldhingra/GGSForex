@@ -24,6 +24,7 @@ export class ForexComponent implements OnInit {
   forexQuantity: number = 0;
   amountInINR: number = 0;  // Declare amountInINR property
   conversionRateText: string = '';
+  maximumCurrencyText: string = '';
 
   selectedProducts: string[] = [];
   products: string[] = [
@@ -43,7 +44,6 @@ export class ForexComponent implements OnInit {
   currencies: { code: string, currencyName: string }[] = [
     { code: 'USD', currencyName: 'United States Dollar' },
     { code: 'EUR', currencyName: 'Euro' },
-    { code: 'INR', currencyName: 'Indian Rupee' },
     { code: 'GBP', currencyName: 'British Pound' },
     { code: 'AUD', currencyName: 'Australian Dollar' },
     { code: 'CAD', currencyName: 'Canadian Dollar' },
@@ -132,7 +132,6 @@ export class ForexComponent implements OnInit {
 ];
 
   countryCurrencyMap: { [key: string]: { code: string, currencyName: string } } = {
-    'India': { code: 'INR', currencyName: 'Indian Rupee' },
     'USA': { code: 'USD', currencyName: 'United States Dollar' },
     'Canada': { code: 'CAD', currencyName: 'Canadian Dollar' },
     'Australia': { code: 'AUD', currencyName: 'Australian Dollar' },
@@ -233,7 +232,6 @@ export class ForexComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient,private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    console.log('ForexComponent initialized');
     this.selectedLocation = this.locations[0];
     this.updateCurrencyForLocation(this.selectedLocation); 
   } 
@@ -243,24 +241,41 @@ export class ForexComponent implements OnInit {
     let quantity = event?.target?.value || this.forexQuantity;
     this.amountInINR = 0;
     this.conversionRateText = '';
-
+    this.maximumCurrencyText = ''; // Reset the text initially
+  
     // Ensure that there's a selected currency and quantity is greater than 0
     if (this.selectedCurrency && quantity > 0) {
       // Get conversion rate based on the selected currency
       this.getConversionRate(this.selectedCurrency).subscribe((response) => {
-        const rate: number = response.rates['INR'];
-        
-        // Set the conversion rate text (e.g., "1 USD = 87 INR")
-        this.conversionRateText = `1 ${this.selectedCurrency} =  ${rate * (1 + 1.5 / 100)} INR`;
-
-        // Calculate amount in INR with 1.5% profit
-        this.amountInINR = (quantity * rate) * (1 + 1.5 / 100); 
-
-        // Manually trigger change detection to ensure view is updated immediately
+        const rateToINR: number = response.rates['INR']; // Conversion rate to INR
+        const rateToUSD: number = response.rates['USD']; // Conversion rate to USD
+  
+        // Calculate the adjusted conversion rate (1.5% profit) and round to 2 decimal places
+        let adjustedRateToINR = rateToINR * (1 + 1.5 / 100);
+        adjustedRateToINR = Math.round(adjustedRateToINR * 1000) / 1000;
+  
+        // Set the conversion rate text (e.g., "1 EUR = 87.00 INR")
+        this.conversionRateText = `1 ${this.selectedCurrency} = ${adjustedRateToINR} INR`;
+  
+        // Check if the quantity exceeds the maximum limit in terms of 3000 USD equivalent
+        const maxLimitInUSD = 3000;
+        const equivalentQuantityInUSD = quantity * rateToUSD; // Convert entered value to USD
+        console.log(equivalentQuantityInUSD);
+        if (equivalentQuantityInUSD > maxLimitInUSD) {
+          // If the entered quantity exceeds the 3000 USD equivalent, show the warning message
+          this.maximumCurrencyText = `Maximum limit is 3000 USD or equivalent.`;
+          this.amountInINR = 0; // Do not calculate INR or other currency amounts if limit is exceeded
+        } else {
+          // Calculate amount in INR or other currencies, including the 1.5% profit
+          this.amountInINR = quantity * rateToINR * (1 + 1.5 / 100);
+          this.amountInINR = Math.round(this.amountInINR * 100) / 100; // Round to 2 decimal places
+        }
+  
+        // Manually trigger change detection to ensure the view is updated immediately
         this.cdr.detectChanges();
       });
     }
-  }
+  }  
 
   getConversionRate(currencyCode: string) {
     return this.http.get<{ rates: { [key: string]: number } }>(`https://api.exchangerate-api.com/v4/latest/${currencyCode}`);

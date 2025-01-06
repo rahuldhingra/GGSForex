@@ -65,7 +65,11 @@
           [(ngModel)]="forexQuantity"
           required
           (input)="updateAmount($event)"
+          min="1"
         />
+        <span *ngIf="maximumCurrencyText" class="info-text">
+          {{ maximumCurrencyText }}
+        </span>
         <div class="error-message" *ngIf="forexForm.submitted && forexForm.controls['quantity']?.invalid">
           Forex Quantity is required.
         </div>
@@ -75,7 +79,7 @@
       <div class="form-group">
         <label for="amount">Amount in INR</label>
         <input type="text" id="amount" [value]="amountInINR || 0" disabled />
-        <span *ngIf="conversionRateText" class="conversion-rate-text">
+        <span *ngIf="conversionRateText" class="info-text">
           {{ conversionRateText }}
         </span>
       </div>
@@ -85,7 +89,7 @@
     <button
       type="submit"
       class="book-now-button"
-      [disabled]="!forexForm.valid || forexForm.pristine"
+      [disabled]="!forexForm.valid || forexForm.pristine || maximumCurrencyText || forexQuantity <= 0"
     >
       Book Now
     </button>
